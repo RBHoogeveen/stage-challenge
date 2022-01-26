@@ -8,12 +8,15 @@ class ChallengeService
   {
     $names = collect(['Arne', 'Reinier', 'Kylian', 'Huub', 'Mick', 'Brenda', 'Ruben', 'Desley', 'Carly', 'Esther']);
 
-    $this->sortArray($names);
+    $sortedNames = $this->sortArray($names)->values();
 
     $totalScore = 0;
-    
-    foreach($names as $name) {
-      $score = $this->getNumericValueOfString($name) * $names->search($name);
+
+    $individualScores = [];
+
+    foreach($sortedNames as $name) {
+      $score = $this->getNumericValueOfString($name) * ($sortedNames->search($name) + 1);
+      $individualScores[$name] = $score;
       $totalScore = $totalScore + $score;
     }
     
